@@ -27,4 +27,5 @@ jobs:
       - name: Run tests
         run: |
           cd userapi/src
+          export PYTHONPATH=$(pwd)
           pytest -q
