@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userapi
+  namespace: userapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userapi
+  template:
+    metadata:
+      labels:
+        app: userapi
+    spec:
+      containers:
+      - name: userapi
+        image: gallasng/userapi:latest
+        env:
+        - name: DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: userapi-config
+              key: DATABASE_HOST
+        - name: DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: userapi-config
+              key: DATABASE_NAME
+        - name: DATABASE_USER
+          valueFrom:
+            configMapKeyRef:
+              name: userapi-config
+              key: DATABASE_USER
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: userapi-secret
+              key: DATABASE_PASSWORD
+        ports:
+        - containerPort: 8000
