@@ -1,0 +1,6 @@
+- name: Wait for app to start
+  uri:
+    url: http://localhost:8000/health
+    method: GET
+    status_code: 200
+    timeout: 30

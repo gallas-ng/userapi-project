@@ -7,3 +7,17 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+.vagrant/
+.vagrant.d/
+*.pem
+id_rsa
+id_rsa.pub
+*.retry
+*.log
+.vault_pass
+.env
+*.tfstate
+*.tfstate.backup
+.terraform/
+.DS_Store
+Thumbs.db

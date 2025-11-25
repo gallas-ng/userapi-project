@@ -1,0 +1,25 @@
+- name: Install PostgreSQL
+  apt:
+    name: postgresql
+    state: present
+    update_cache: yes
+
+- name: Ensure database is created
+  become_user: postgres
+  postgresql_db:
+    name: userdb
+
+- name: Ensure user exists
+  become_user: postgres
+  postgresql_user:
+    name: vagrant
+    password: password
+    db: userdb
+    priv: ALL
+
+- name: Enable remote access (local only)
+  lineinfile:
+    path: /etc/postgresql/12/main/pg_hba.conf
+    regexp: '^host\s+all\s+all'
+    line: 'host all all 0.0.0.0/0 md5'
+  notify: restart postgres

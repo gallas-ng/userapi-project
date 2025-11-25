@@ -1,0 +1,27 @@
+- name: Install app dependencies
+  pip:
+    requirements: /opt/userapi/requirements.txt
+    executable: pip3
+
+- name: Run app with Uvicorn (systemd)
+  copy:
+    dest: /etc/systemd/system/userapi.service
+    content: |
+      [Unit]
+      Description=UserAPI FastAPI app
+      After=network.target
+
+      [Service]
+      User=vagrant
+      WorkingDirectory=/opt/userapi
+      ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Start and enable the service
+  systemd:
+    name: userapi
+    enabled: yes
+    state: restarted
