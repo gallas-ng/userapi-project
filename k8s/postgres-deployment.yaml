@@ -18,19 +18,11 @@ spec:
         image: postgres:15
         env:
         - name: POSTGRES_DB
-          valueFrom:
-            configMapKeyRef:
-              name: userapi-config
-              key: DATABASE_NAME
+          value: userdb
         - name: POSTGRES_USER
-          valueFrom:
-            configMapKeyRef:
-              name: userapi-config
-              key: DATABASE_USER
+          value: vagrant
         - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: userapi-secret
-              key: DATABASE_PASSWORD
+          value: password
+
         ports:
         - containerPort: 5432

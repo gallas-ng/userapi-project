@@ -18,24 +18,13 @@ spec:
         image: gallasng/userapi:latest
         env:
         - name: DATABASE_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: userapi-config
-              key: DATABASE_HOST
+          value: postgres
         - name: DATABASE_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: userapi-config
-              key: DATABASE_NAME
+          value: userdb
         - name: DATABASE_USER
-          valueFrom:
-            configMapKeyRef:
-              name: userapi-config
-              key: DATABASE_USER
+          value: vagrant
         - name: DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: userapi-secret
-              key: DATABASE_PASSWORD
+          value: password
+
         ports:
         - containerPort: 8000

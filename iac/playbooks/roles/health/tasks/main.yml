@@ -1,6 +1,10 @@
-- name: Wait for app to start
+- name: Wait for app to be healthy
   uri:
     url: http://localhost:8000/health
     method: GET
     status_code: 200
-    timeout: 30
+    timeout: 5
+  register: result
+  retries: 10
+  delay: 5
+  until: result.status == 200

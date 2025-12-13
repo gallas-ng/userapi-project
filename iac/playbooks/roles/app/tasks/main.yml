@@ -1,6 +1,6 @@
 - name: Install app dependencies
   pip:
-    requirements: /opt/userapi/requirements.txt
+    requirements: /opt/userapi/src/app/requirements.txt
     executable: pip3
 
 - name: Run app with Uvicorn (systemd)
@@ -9,12 +9,12 @@
     content: |
       [Unit]
       Description=UserAPI FastAPI app
-      After=network.target
+      After=network.target postgresql.service
 
       [Service]
       User=vagrant
-      WorkingDirectory=/opt/userapi
-      ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+      WorkingDirectory=/opt/userapi/src
+      ExecStart=/usr/bin/python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
       Restart=always
 
       [Install]
