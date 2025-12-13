@@ -7,23 +7,23 @@ from asgi_lifespan import LifespanManager  # NEW
 async def test_crud_flow():
     async with LifespanManager(app):  # triggers startup/shutdown events
         async with AsyncClient(app=app, base_url="http://test") as ac:
-            # 1️⃣ Test creating a user
+            # Test creating a user
             response = await ac.post("/users", json={"name": "Bob", "email": "bob@example.com"})
             assert response.status_code == 200
             user = response.json()
             user_id = user["id"]
 
-            # 2️⃣ List users
+            # List users
             response = await ac.get("/users")
             assert response.status_code == 200
             users = response.json()
             assert any(u["id"] == user_id for u in users)
 
-            # 3️⃣ Get user by ID
+            # Get user by ID
             response = await ac.get(f"/users/{user_id}")
             assert response.status_code == 200
             assert response.json()["id"] == user_id
 
-            # 4️⃣ Non-existing user
+            # Non-existing user
             response = await ac.get("/users/9999")
             assert response.status_code == 404
