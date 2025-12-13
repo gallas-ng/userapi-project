@@ -25,6 +25,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./userapi/src/app
+          context: ./userapi/src
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/userapi:latest
