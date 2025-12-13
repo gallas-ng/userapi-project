@@ -1,4 +1,4 @@
-from .db import db
+from app.db import db
 
 async def create_user(name: str, email: str):
     row = await db.fetchrow(

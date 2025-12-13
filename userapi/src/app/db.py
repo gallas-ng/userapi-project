@@ -1,9 +1,14 @@
 import asyncpg
 import os
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://vagrant:password@localhost:5432/userdb"
+
+DB_USER = os.getenv("DATABASE_USER", "vagrant")
+DB_PASS = os.getenv("DATABASE_PASSWORD", "password")
+DB_HOST = os.getenv("DATABASE_HOST", "localhost")
+DB_NAME = os.getenv("DATABASE_NAME", "userdb")
+DATABASE_URL = os.getenv("DATABASE_URL") or (
+    f"postgresql://{DB_USER}:{DB_PASS}"
+    f"@{DB_HOST}:5432/{DB_NAME}"
 )
 
 class Database:

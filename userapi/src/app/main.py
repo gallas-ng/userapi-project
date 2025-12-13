@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
-from .db import init_db, db
-from .schemas import UserCreate, UserOut
-from .crud import create_user, get_user, list_users
+from app.db import init_db, db
+from app.schemas import UserCreate, UserOut
+from app.crud import create_user, get_user, list_users
 
 app = FastAPI(title="UserAPI")
 
@@ -12,6 +12,10 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     await db.close()
+
+@app.get("/")
+async def home():
+    return "Hi, welcome to the user api project"
 
 @app.get("/health")
 async def health():
