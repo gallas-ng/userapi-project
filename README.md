@@ -1,4 +1,4 @@
-# UserAPI DevOps Project
+# **UserAPI DevOps Project**
 
 ## 1. Project Overview
 
@@ -109,7 +109,7 @@ Tests implemented:
   <img src="images/tests.png" alt="API tests" width="600"/>
 
 
-#### -c Continuous Integration (CI)
+#### C - Continuous Integration (CI)
 - GitHub Actions workflow: 
     - app workflow: `.github/workflows/ci.yml`
     - app image workflow: `.github/workflows/docker-publish.yml`
@@ -117,52 +117,64 @@ Tests implemented:
   - install dependencies
   - run tests
 
--- img
+  <img src="images/ci.png" alt="API ci" width="600"/>
+
   - build Docker image after change
   - push to Docker Hub on `master`
 
--- img
+  <img src="images/docker_ci.png" alt="API Docker ci" width="600"/>
 
-#### -d Containerization (Docker)
+
+#### D - Containerization (Docker)
 - Dockerfile:
   - light Python base image
   - installs dependencies
   - exposes port 8000
   - starts FastAPI with Uvicorn
-  - `.dockerignore` used to reduce image size
---img
-  - Image pushed to Docker Hub:
-  - `docker.io/gallasng/userapi:latest`
---img
 
-#### -e Infrastructure as Code (Vagrant + Ansible)
+  <img src="images/docker_image.png" alt="API image" width="300"/>
+
+  - Image pushed to Docker Hub:
+  - `https://docker.io/gallasng/userapi:latest`
+
+  <img src="images/docker_hub.png" alt="API docker hub" width="600"/>
+
+#### E - Infrastructure as Code (Vagrant + Ansible)
   - Vagrant VM: Ubuntu 22.04
   - Ansible provisioning:
   - install Python & PostgreSQL
   - deploy application via sync folder
   - systemd service created
---img
-  - health check verification
---img
 
-#### -f Kubernetes Deployment
+  <img src="images/vagrant.png" alt="API iac" width="600"/>
+
+  - health check verification
+
+  <img src="images/vagrant_check.png" alt="API iac check" width="600"/>
+
+#### F - Kubernetes Deployment
 Resources created:
 - namespace: `userapi`
 - deployments:
   - **userapi**
   - **postgres**
+
+  <img src="images/pods.png" alt="API pods"/>
+
 - services:
   - ClusterIP for postgres
   - NodePort for userapi
---img
 
-- Verified inside Minikube VM
---img
+  <img src="images/node_ports.png" alt="API Node ports"/>
+
+- Verified deployment 
+
+  <img src="images/minikube.png" alt="API Minikube test" width="400"/>
 
 ## 3. Instructions to Run the Project
-Clone the project
+Clone the project (run the following commands at project root)
 ### 3.1 Run Locally (without Docker)
-* Make sure to have a running instance of postgres with:
+  * Make sure to have a running instance of postgres with:
  user = vagrant
  password = password
  db = userdb
@@ -193,13 +205,14 @@ http://localhost:8000
 docker build -t userapi /userapi/src/
 ```
 ### 3.4 Run with Vagrant + Ansible 
+[Install Vagrant](https://developer.hashicorp.com/vagrant/downloads/) following the instructions depending on your OS.
 ```bash
 cd iac
-vagrant up .
-vagrant ssh
+vagrant up
 ```
-You should be able to access the app through the VM using curl and locally at http://localhost:8000/ .
+You should be able to access the app through the VM (eg. ssh) using curl and locally at http://localhost:8000/ .
 ``` bash
+vagrant ssh
 curl localhost:8000/health
 ```
 ### 3.5 Deploy on Kubernetes (Minikube) 
@@ -228,21 +241,24 @@ kubectl apply -f k8s/userapi-service.yaml
 5. Get NodePort
 ```bash
 kubectl get svc -n userapi
-```
+
 Expected output:
 userapi   NodePort   ... 8000:30080/TCP
+```
 
 5. Get you minikube Ip
 ```bash
 minikube ip
-```
+
 Expected output:
 192.168.59.1**
-
-6. Access the app with the forwarding port and your minikube ip :
-```bash
-http://192.168.59.101:30080/health (replace with your own ip)
 ```
+
+6. Access the app with the forwarded port and your minikube ip :
+
+    http://192.168.59.101:30080/health `(replace with your own minikube ip)`
+    
+    http://192.168.59.101:30080/docs  `(see the swagger ui API)`
 
 ## 4. Links
 Docker Hub Image:
@@ -253,10 +269,10 @@ https://github.com/gallas-ng/userapi-project
 
 
 ## 5. Authorship
-Project completed by:
- - Falilou NIang - Katy Mayoro Fall
- - @Data ScienceTech Institute
- - Course: DevOps – DSTI
- - Year: 2025
+**Project completed by:**
+ - **Falilou Niang - Katy Mayoro Fall**
+ - **@Data ScienceTech Institute**
+ - **Course: DevOps – DSTI**
+ - **Year: 2025**
 
-All code, automation scripts, tests, and documentation were developed as part of the academic requirements of the DevOps module.
+>All code, automation scripts, tests, and documentation were developed as part of the academic requirements of the DevOps module.
