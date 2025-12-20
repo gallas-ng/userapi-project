@@ -270,7 +270,7 @@ https://github.com/gallas-ng/userapi-project
 
 ## 5. Authorship
 **Project completed by:**
- - **Falilou Niang - Katy Mayoro Fall**
+ - **Falilou Niang - Katy Mayoro Fall - Omprakash Choudhary**
  - **@Data ScienceTech Institute**
  - **Course: DevOps – DSTI**
  - **Year: 2025**
